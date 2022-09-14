@@ -1,9 +1,6 @@
 package com.example.bank.cashBox;
 
-import com.example.bank.utils.BigDecimalConverter;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
