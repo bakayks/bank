@@ -33,6 +33,9 @@ public class CashBoxController {
             CashBoxDto cashBoxDto = new CashBoxDto();
             cashBoxDto.setId(cashBox.getId());
             cashBoxDto.setName(cashBox.getName());
+            cashBoxDto.setCurrentBalanceUSD(cashBox.getCurrentBalanceUSD());
+            cashBoxDto.setCurrentBalanceEURO(cashBox.getCurrentBalanceEURO());
+            cashBoxDto.setCurrentBalanceSOM(cashBox.getCurrentBalanceSOM());
             return new ResponseEntity<>(cashBoxDto, HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

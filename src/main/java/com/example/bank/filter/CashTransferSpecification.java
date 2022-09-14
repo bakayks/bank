@@ -25,6 +25,12 @@ public class CashTransferSpecification {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
+            if (request.getStartDate() != null && request.getEndDate() != null) {
+                predicates.add(criteriaBuilder.between(
+                        root.get("createdDate"), request.getStartDate(), request.getEndDate()
+                ));
+            }
+
             if (request.getCurrency() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("currency"), request.getCurrency()));
             }
@@ -32,6 +38,10 @@ public class CashTransferSpecification {
             if (request.getSenderCashBoxName() != null) {
                 Join<CashTransfer, CashBox> cashBoxJoin = root.join("senderCashBox");
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(cashBoxJoin.get("name")), "%" + request.getSenderCashBoxName().toLowerCase() + "%"));
+            }
+            if (request.getRecipientCashBoxName() != null) {
+                Join<CashTransfer, CashBox> cashBoxJoin = root.join("recipientCashBox");
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(cashBoxJoin.get("name")), "%" + request.getRecipientCashBoxName().toLowerCase() + "%"));
             }
 
             if (request.getTransferStatus() != null) {
@@ -43,11 +53,23 @@ public class CashTransferSpecification {
             }
 
             if (request.getSenderFirstName() != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("senderFirstName")), "%" + request.getSenderFirstName().toLowerCase() + "%"));
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("senderFirstname")), "%" + request.getSenderFirstName().toLowerCase() + "%"));
             }
 
             if (request.getSenderPatronymic() != null) {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("senderPatronymic")), "%" + request.getSenderPatronymic().toLowerCase() + "%"));
+            }
+
+            if (request.getRecipientLastName() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("recipientLastname")), "%" + request.getRecipientLastName().toLowerCase() + "%"));
+            }
+
+            if (request.getRecipientFirstName() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("recipientFirstname")), "%" + request.getRecipientFirstName().toLowerCase() + "%"));
+            }
+
+            if (request.getRecipientPatronymic() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("recipientPatronymic")), "%" + request.getRecipientPatronymic().toLowerCase() + "%"));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

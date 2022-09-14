@@ -1,7 +1,5 @@
 package com.example.bank.transfer;
 
-import com.example.bank.cashBox.CashBox;
-import com.example.bank.dto.CashBoxDto;
 import com.example.bank.dto.CashTransferDto;
 import com.example.bank.filter.CashTransferSpecification;
 import com.example.bank.model.CashTransferFilterModel;
@@ -52,7 +50,12 @@ public class CashTransferController {
     }
 
     @GetMapping("/list")
-    private ResponseEntity<Map<String, Object>> getListCashTransfer(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<Map<String, Object>> list() {
+        return getListCashTransfer(1, 5, new CashTransferFilterModel());
+    }
+
+    @PostMapping("/filter")
+    private ResponseEntity<Map<String, Object>> getListCashTransfer(@RequestParam(defaultValue = "1") int page,
                                                                @RequestParam(defaultValue = "3") int size, @RequestBody CashTransferFilterModel cashTransferFilterModel){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -61,7 +64,7 @@ public class CashTransferController {
 
         List<CashTransferDto> cashTransferDtoList = new ArrayList<>();
 
-        Pageable paging = PageRequest.of(page, size);
+        Pageable paging = PageRequest.of(page - 1, size);
 
         Page<CashTransfer> pageTuts = cashTransferRepository.findAll(cashTransferSpecification.getCashTransferBySpecification(cashTransferFilterModel), paging);
         for(CashTransfer cashTransfer : pageTuts.getContent()) {
@@ -69,6 +72,7 @@ public class CashTransferController {
                     .id(cashTransfer.getId())
                     .uniqueCode(currentUser.getCashBox().getId().equals(cashTransfer.getSenderCashBox().getId()) ? cashTransfer.getUniqueCode() : "КОНФИДЕНЦИАЛЬНО")
                     .currency(cashTransfer.getCurrency())
+                            .createdDate(cashTransfer.getCreatedDate())
                     .transferAmount(cashTransfer.getTransferAmount())
                     .transferComment(cashTransfer.getTransferComment())
                     .transferStatus(cashTransfer.getTransferStatus())

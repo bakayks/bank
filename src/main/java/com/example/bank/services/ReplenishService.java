@@ -25,14 +25,14 @@ public class ReplenishService {
             if(operations == Operations.SUBTRACT){
                 switch (replenishModel.getCurrency()) {
                     case SOM -> cashBox.setCurrentBalanceSOM(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
-                    case EURO -> cashBox.setCurrentBalanceEURO(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
-                    case DOLLAR -> cashBox.setCurrentBalanceUSD(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
+                    case EURO -> cashBox.setCurrentBalanceEURO(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceEURO()));
+                    case DOLLAR -> cashBox.setCurrentBalanceUSD(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceUSD()));
                 }
             }else if(operations == Operations.ADDITION){
                 switch (replenishModel.getCurrency()) {
                     case SOM -> cashBox.setCurrentBalanceSOM(additionOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
-                    case EURO -> cashBox.setCurrentBalanceEURO(additionOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
-                    case DOLLAR -> cashBox.setCurrentBalanceUSD(additionOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
+                    case EURO -> cashBox.setCurrentBalanceEURO(additionOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceEURO()));
+                    case DOLLAR -> cashBox.setCurrentBalanceUSD(additionOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceUSD()));
                 }
             }
             cashBoxRepository.save(cashBox);

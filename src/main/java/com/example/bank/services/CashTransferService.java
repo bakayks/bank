@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -46,6 +47,7 @@ public class CashTransferService {
             cashTransfer.setRecipientPatronymic(cashTransferModel.getRecipientPatronymic());
             cashTransfer.setRecipientNumber(cashTransferModel.getRecipientNumber());
             cashTransfer.setUniqueCode(UUID.randomUUID().toString());
+            cashTransfer.setCreatedDate(new Date());
             cashTransferRepository.save(cashTransfer);
 
             CashBox senderCashBox = cashBoxOptional.get();
