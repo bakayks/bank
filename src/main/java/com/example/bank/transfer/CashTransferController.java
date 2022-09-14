@@ -3,6 +3,8 @@ package com.example.bank.transfer;
 import com.example.bank.cashBox.CashBox;
 import com.example.bank.dto.CashBoxDto;
 import com.example.bank.dto.CashTransferDto;
+import com.example.bank.filter.CashTransferSpecification;
+import com.example.bank.model.CashTransferFilterModel;
 import com.example.bank.model.WithdrawalModel;
 import com.example.bank.services.CashTransferService;
 import com.example.bank.user.User;
@@ -33,6 +35,8 @@ public class CashTransferController {
     @Autowired
     private CashTransferService cashTransferService;
 
+    @Autowired
+    private CashTransferSpecification cashTransferSpecification;
 
     @Autowired
     private UserRepository userRepository;
@@ -49,7 +53,7 @@ public class CashTransferController {
 
     @GetMapping("/list")
     private ResponseEntity<Map<String, Object>> getListCashTransfer(@RequestParam(defaultValue = "0") int page,
-                                                               @RequestParam(defaultValue = "3") int size){
+                                                               @RequestParam(defaultValue = "3") int size, @RequestBody CashTransferFilterModel cashTransferFilterModel){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -59,10 +63,11 @@ public class CashTransferController {
 
         Pageable paging = PageRequest.of(page, size);
 
-        Page<CashTransfer> pageTuts = cashTransferRepository.findAll(paging);
+        Page<CashTransfer> pageTuts = cashTransferRepository.findAll(cashTransferSpecification.getCashTransferBySpecification(cashTransferFilterModel), paging);
         for(CashTransfer cashTransfer : pageTuts.getContent()) {
             cashTransferDtoList.add(CashTransferDto.builder()
                     .id(cashTransfer.getId())
+                    .uniqueCode(currentUser.getCashBox().getId().equals(cashTransfer.getSenderCashBox().getId()) ? cashTransfer.getUniqueCode() : "КОНФИДЕНЦИАЛЬНО")
                     .currency(cashTransfer.getCurrency())
                     .transferAmount(cashTransfer.getTransferAmount())
                     .transferComment(cashTransfer.getTransferComment())

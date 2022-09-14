@@ -1,4 +1,4 @@
-package com.example.bank.filter;
+package com.example.bank.config;
 
 import com.example.bank.services.CustomUserDetailsService;
 import com.example.bank.utils.JwtUtil;

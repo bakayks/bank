@@ -1,6 +1,5 @@
 package com.example.bank.config;
 
-import com.example.bank.filter.JwtFilter;
 import com.example.bank.services.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

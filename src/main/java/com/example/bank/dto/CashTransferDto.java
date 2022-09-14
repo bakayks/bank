@@ -16,6 +16,8 @@ public class CashTransferDto {
 
     private Currency currency;
 
+    private String uniqueCode;
+
     private Integer senderCashBoxId;
 
     private String senderCashBoxName;
