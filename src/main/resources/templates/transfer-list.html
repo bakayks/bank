@@ -1,0 +1,248 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head th:replace="header :: head">
+    <meta charset="utf-8">
+</head>
+<body class="antialiased">
+<div class="container">
+    <div th:replace="header :: header"></div>
+    <div class="row mt-2">
+        <form th:action="@{/cashTransfer/list/filter}" method="post" class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Фильтры по дате и валюте перевода</h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="col-span-2">
+                                        <label class="form-label">Дата создания с</label>
+                                        <input
+                                                name="startDate"
+                                                type="date"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="form-label">Дата создания по</label>
+                                        <input
+                                                name="endDate"
+                                                type="date"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="form-label">Валюта</label>
+                                        <select name="currency" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="DOLLAR">USD</option>
+                                            <option value="EURO">EURO</option>
+                                            <option value="SOM">SOM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Фильтры по статусу и названию касс</h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="col-span-2">
+                                        <label class="form-label">Статус</label>
+                                        <select name="transferStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option value="CREATED">Создан</option>
+                                            <option value="ISSUED">Выдан</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="form-label">Касса (отправил)</label>
+                                        <input
+                                                name="senderCashBoxName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-2">
+                                        <label class="form-label">Касса (выдал)</label>
+                                        <input
+                                                name="recipientCashBoxName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Фильтры по отправителю</h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="col-span-4">
+                                        <label class="form-label">Имя отправителя</label>
+                                        <input
+                                                name="senderFirstName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-4">
+                                        <label class="form-label">Фамилия отправителя</label>
+                                        <input
+                                                name="senderLastName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-4">
+                                        <label class="form-label">Отчество отправителя</label>
+                                        <input
+                                                name="senderPatronymic"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Фильтры по получателю</h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                    <div class="col-span-4">
+                                        <label class="form-label">Имя получателя</label>
+                                        <input
+                                                name="recipientFirstName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-4">
+                                        <label class="form-label">Фамилия получателя</label>
+                                        <input
+                                                name="recipientLastName"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-4">
+                                        <label class="form-label">Отчество получателя</label>
+                                        <input
+                                                name="recipientPatronymic"
+                                                type="text"
+                                                class="form-control"
+                                        />
+                                    </div>
+                                    <div class="col-span-12 justify-self-end">
+                                        <button type="submit" class="btn btn-primary mt-2">Поиск</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="wrapper mt-2">
+        <div class="page-wrapper mt-10">
+            <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+                <table class="table table-report -mt-2" id="table_id">
+                    <thead>
+                    <tr>
+                        <th class="whitespace-nowrap">Дата создания</th>
+                        <th class="whitespace-nowrap">Код перевода</th>
+                        <th class="whitespace-nowrap">Касса (отправил)</th>
+                        <th class="whitespace-nowrap">Касса (выдал)</th>
+                        <th class="whitespace-nowrap">ФИО отправителя</th>
+                        <th class="whitespace-nowrap">ФИО получателя</th>
+                        <th class="whitespace-nowrap">Валюта</th>
+                        <th class="whitespace-nowrap">Сумма перевода</th>
+                        <th class="whitespace-nowrap">Статус перевода</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="transfer : ${ cashTransfers }"
+                        class="intro-x">
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.createdDate} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.uniqueCode} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.senderCashBoxName} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.recipientCashBoxName} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.senderLastname + ' ' + transfer.senderFirstname  + ' ' + transfer.senderPatronymic} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.recipientLastname + ' ' + transfer.recipientFirstname  + ' ' + transfer.recipientPatronymic} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.currency} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap">
+                                [[ ${transfer.transferAmount} ]]
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-s whitespace-nowrap" th:text="${transfer.transferStatus.equals('CREATED') ? 'Создан' : 'Выдан'}"></div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example" th:if="${transferPage.totalPages > 0}">
+                    <ul class="pagination">
+                        <li class="page-item" th:class="${1 == transferPage.number + 1} ? 'page-item disabled'"><a class="page-link" th:href="@{/cashTransfer/list/filter(size=${transferPage.size}, page=${transferPage.number})}">Предыдущая</a></li>
+                        <li class="page-item" th:class="${pageNumber==transferPage.number + 1} ? 'page-item active'" th:each="pageNumber : ${pageNumbers}">
+                            <a th:href="@{/cashTransfer/list/filter(size=${transferPage.size}, page=${pageNumber})}"
+                               th:text="${pageNumber}"
+                               class="page-link"></a></li>
+                        <li class="page-item" th:class="${transferPage.totalPages == transferPage.number + 1} ? 'page-item disabled'"><a class="page-link"  th:href="@{/cashTransfer/list/filter(size=${transferPage.size}, page=${transferPage.number + 2})}">Следующая</a></li>
+                    </ul>
+                </nav>
+        </div>
+    </div>
+</div>
+</body>
+</html>

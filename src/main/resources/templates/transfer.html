@@ -1,0 +1,114 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      lang="en">
+<head th:replace="header :: head">
+    <meta charset="utf-8">
+</head>
+<body class="antialiased">
+<div class="wrapper">
+    <div th:replace="header :: header"></div>
+    <div class="page-wrapper">
+        <div class="page-body">
+            <div class="container-xl justify-content-center">
+                <div class="row row-cards">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <form th:action="@{/cashTransfer/create}"
+                              method="post">
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Валюта
+                                </label>
+                                <select required id="currency" name="currency" class="form-control">
+                                    <option value="DOLLAR">USD</option>
+                                    <option value="EURO">EURO</option>
+                                    <option value="SOM">SOM</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Сумма перевода
+                                </label>
+                                <input required name="transferAmount" class="form-control" type="number" placeholder="Сумма перевода">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Комментарий для перевода
+                                </label>
+                                <input required name="transferComment" class="form-control" type="text" placeholder="Комментарий для перевода">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Фамилия отправителя
+                                </label>
+                                <input required name="senderLastname" class="form-control" type="text" placeholder="Фамилия отправителя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Имя отправителя
+                                </label>
+                                <input required name="senderFirstname" class="form-control" type="text" placeholder="Имя отправителя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Отчество отправителя
+                                </label>
+                                <input name="senderPatronymic" class="form-control" type="text" placeholder="Отчество отправителя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Номер отправителя
+                                </label>
+                                <input required name="senderNumber" class="form-control" type="number" placeholder="Номер отправителя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Фамилия получателя
+                                </label>
+                                <input required name="recipientLastname" class="form-control" type="text" placeholder="Фамилия получателя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Имя получателя
+                                </label>
+                                <input required name="recipientFirstname" class="form-control" type="text" placeholder="Имя получателя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Отчество получателя
+                                </label>
+                                <input name="recipientPatronymic" class="form-control" type="text" placeholder="Отчество получателя">
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-black text-sm font-bold mb-2 mt-2">
+                                    Номер получателя
+                                </label>
+                                <input required name="recipientNumber" class="form-control" type="number" placeholder="Номер получателя">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    $('.collapse').on('show.bs.collapse', function (e) {
+        var $card = $(this).closest('.cardForJs');
+        var $open = $($(this).data('parent')).find('.collapse.show');
+
+        var additionalOffset = 0;
+        if ($card.prevAll().filter($open.closest('.cardForJs')).length !== 0) {
+            additionalOffset = $open.height();
+        }
+        $('html,body').animate({
+            scrollTop: $card.offset().top - additionalOffset
+        }, 500);
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:replace="header :: head">
+    <meta charset="utf-8">
+</head>
+<body class="antialiased">
+<div class="wrapper">
+    <div th:replace="header :: header"></div>
+    <div class="page-wrapper">
+        <div class="page-body">
+            <div class="container-xl justify-content-center">
+                <div class="row row-cards">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <form th:action="@{/withdrawal}"
+                              method="post">
+                            <div class="grid grid-cols-12 gap-6">
+                                <div class="col-span-4">
+                                    <h2 class="intro-y text-lg font-medium mt-10">Снятие денег</h2>
+                                    <div class="w-full max-w-xs mt-10">
+                                        <div class="mb-4">
+                                            <label class="block text-white text-sm font-bold mb-2">
+                                                Код платежа:
+                                            </label>
+                                            <input required name="uniqueCode" class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="Уникальный код для снятия">
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+                                                Снять деньги
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+    $('.collapse').on('show.bs.collapse', function (e) {
+        var $card = $(this).closest('.cardForJs');
+        var $open = $($(this).data('parent')).find('.collapse.show');
+
+        var additionalOffset = 0;
+        if ($card.prevAll().filter($open.closest('.cardForJs')).length !== 0) {
+            additionalOffset = $open.height();
+        }
+        $('html,body').animate({
+            scrollTop: $card.offset().top - additionalOffset
+        }, 500);
+    });
+
+
+</script>
+</body>
+</html>

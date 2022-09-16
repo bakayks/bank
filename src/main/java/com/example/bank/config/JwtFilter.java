@@ -1,6 +1,6 @@
 package com.example.bank.config;
 
-import com.example.bank.services.CustomUserDetailsService;
+import com.example.bank.service.CustomUserDetailsService;
 import com.example.bank.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
