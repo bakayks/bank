@@ -1,7 +1,7 @@
 package com.example.bank.model;
 
-import com.example.bank.Currency;
-import com.example.bank.enums.TransferStatus;
+import com.example.bank.model.enums.Currency;
+import com.example.bank.model.enums.TransferStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +15,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CashTransferFilterModel {
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Bishkek")
-    private Date startDate;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Bishkek")
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private Currency currency;
     private String senderCashBoxName;
     private String senderFirstName;

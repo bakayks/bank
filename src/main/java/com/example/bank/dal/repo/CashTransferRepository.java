@@ -1,5 +1,6 @@
-package com.example.bank.transfer;
+package com.example.bank.dal.repo;
 
+import com.example.bank.dal.entity.CashTransfer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

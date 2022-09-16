@@ -1,12 +1,8 @@
-package com.example.bank.transfer;
+package com.example.bank.dal.entity;
 
-import com.example.bank.Currency;
-import com.example.bank.cashBox.CashBox;
-import com.example.bank.enums.TransferStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.bank.model.enums.Currency;
+import com.example.bank.model.enums.TransferStatus;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +11,7 @@ import java.util.Date;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

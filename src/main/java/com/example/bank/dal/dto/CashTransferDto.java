@@ -1,7 +1,7 @@
-package com.example.bank.dto;
+package com.example.bank.dal.dto;
 
-import com.example.bank.Currency;
-import com.example.bank.enums.TransferStatus;
+import com.example.bank.model.enums.Currency;
+import com.example.bank.model.enums.TransferStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -33,7 +33,7 @@ public class CashTransferDto {
 
     private BigDecimal transferAmount;
 
-    private TransferStatus transferStatus;
+    private String transferStatus;
 
     private String senderFirstname;
 
