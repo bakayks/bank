@@ -1,4 +1,4 @@
-package com.example.bank.enums;
+package com.example.bank.model.enums;
 
 public enum TransferStatus {
     CREATED, ISSUED

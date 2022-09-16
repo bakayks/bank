@@ -1,9 +1,9 @@
-package com.example.bank.services;
+package com.example.bank.service;
 
-import com.example.bank.cashBox.CashBox;
-import com.example.bank.cashBox.CashBoxRepository;
-import com.example.bank.enums.Operations;
+import com.example.bank.dal.entity.CashBox;
+import com.example.bank.dal.repo.CashBoxRepository;
 import com.example.bank.model.ReplenishModel;
+import com.example.bank.model.enums.Operations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +18,36 @@ public class ReplenishService {
     @Autowired
     private CashBoxRepository cashBoxRepository;
 
-    public ResponseEntity<HttpStatus> operationWithBalance(ReplenishModel replenishModel, Operations operations) {
+    public String operationWithBalance(ReplenishModel replenishModel, Operations operations) {
         Optional<CashBox> cashBoxOptional = cashBoxRepository.findById(replenishModel.getCashBoxId());
         if(cashBoxOptional.isPresent()){
             CashBox cashBox = cashBoxOptional.get();
             if(operations == Operations.SUBTRACT){
+                BigDecimal bigDecimal = null;
                 switch (replenishModel.getCurrency()) {
                     case SOM:
-                        cashBox.setCurrentBalanceSOM(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM()));
+                        bigDecimal = subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceSOM());
+                        if(bigDecimal.compareTo(BigDecimal.ZERO) >= 0){
+                            cashBox.setCurrentBalanceSOM(bigDecimal);
+                        }else {
+                            return "Недостаточно валюты (сом) на балансе";
+                        }
                         break;
                     case EURO: cashBox.setCurrentBalanceEURO(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceEURO()));
+                        bigDecimal = subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceEURO());
+                        if(bigDecimal.compareTo(BigDecimal.ZERO) >= 0){
+                            cashBox.setCurrentBalanceEURO(bigDecimal);
+                        } else {
+                            return "Недостаточно валюты (евро) на балансе";
+                        }
                         break;
-                    case DOLLAR: cashBox.setCurrentBalanceUSD(subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceUSD()));
+                    case DOLLAR:
+                        bigDecimal = subtractOperation(replenishModel.getReplenishAmount(), cashBox.getCurrentBalanceUSD());
+                        if(bigDecimal.compareTo(BigDecimal.ZERO) >= 0){
+                            cashBox.setCurrentBalanceUSD(bigDecimal);
+                        }   else {
+                            return "Недостаточно валюты (доллар) на балансе";
+                        }
                         break;
                 }
             }else if(operations == Operations.ADDITION){
@@ -46,11 +64,8 @@ public class ReplenishService {
                 }
             }
             cashBoxRepository.save(cashBox);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
+        return "Снятие прошло успешно!";
     }
 
     private BigDecimal additionOperation(BigDecimal additionValue, BigDecimal currentBalance) {

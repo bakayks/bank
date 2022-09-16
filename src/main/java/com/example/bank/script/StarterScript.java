@@ -1,7 +1,11 @@
 package com.example.bank.script;
 
-import com.example.bank.cashBox.CashBox;
-import com.example.bank.cashBox.CashBoxRepository;
+import com.example.bank.dal.entity.CashBox;
+import com.example.bank.dal.entity.CashTransfer;
+import com.example.bank.dal.repo.CashBoxRepository;
+import com.example.bank.dal.repo.CashTransferRepository;
+import com.example.bank.model.enums.Currency;
+import com.example.bank.model.enums.TransferStatus;
 import com.example.bank.user.User;
 import com.example.bank.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.UUID;
 
 
 @Component
@@ -44,16 +50,9 @@ public class StarterScript implements CommandLineRunner {
                 .currentBalanceEURO(new BigDecimal("1000"))
                 .currentBalanceUSD(new BigDecimal("1000"))
                 .build();
-        CashBox cashBox4 = CashBox.builder()
-                .name("Касса №4")
-                .currentBalanceSOM(new BigDecimal("1000"))
-                .currentBalanceEURO(new BigDecimal("1000"))
-                .currentBalanceUSD(new BigDecimal("1000"))
-                .build();
         cashBoxRepo.save(cashBox1);
         cashBoxRepo.save(cashBox2);
         cashBoxRepo.save(cashBox3);
-        cashBoxRepo.save(cashBox4);
 
 
         User user1 = User.builder()
@@ -71,14 +70,8 @@ public class StarterScript implements CommandLineRunner {
                 .password(passwordEncoder.encode("123"))
                 .cashBox(cashBox3)
                 .build();
-        User user4 = User.builder()
-                .username("user4")
-                .password(passwordEncoder.encode("123"))
-                .cashBox(cashBox4)
-                .build();
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
-        userRepository.save(user4);
     }
 }
