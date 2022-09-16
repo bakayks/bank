@@ -1,5 +1,6 @@
-package com.example.bank.cashBox;
+package com.example.bank.dal.repo;
 
+import com.example.bank.dal.entity.CashBox;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

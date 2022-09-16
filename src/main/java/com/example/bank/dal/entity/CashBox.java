@@ -1,4 +1,4 @@
-package com.example.bank.cashBox;
+package com.example.bank.dal.entity;
 
 import lombok.*;
 
