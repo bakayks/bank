@@ -3,8 +3,8 @@ package com.example.bank.service;
 import com.example.bank.dal.dto.CashBoxDto;
 import com.example.bank.dal.entity.CashBox;
 import com.example.bank.dal.repo.CashBoxRepository;
-import com.example.bank.user.User;
-import com.example.bank.user.UserRepository;
+import com.example.bank.dal.entity.User;
+import com.example.bank.dal.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,9 +31,9 @@ public class CashBoxService {
             cashBoxDto = CashBoxDto.builder()
                     .id(cashBox.getId())
                     .name(cashBox.getName())
-                    .currentBalanceUSD(cashBox.getCurrentBalanceUSD().toString())
-                    .currentBalanceEURO(cashBox.getCurrentBalanceEURO().toString())
-                    .currentBalanceSOM(cashBox.getCurrentBalanceSOM().toString())
+                    .currentBalanceUSD(cashBox.getCashBoxBalance().getCurrentBalanceUSD().toString())
+                    .currentBalanceEURO(cashBox.getCashBoxBalance().getCurrentBalanceEURO().toString())
+                    .currentBalanceSOM(cashBox.getCashBoxBalance().getCurrentBalanceSOM().toString())
                 .build();
         }
         model.addAttribute("cashBox", cashBoxDto);

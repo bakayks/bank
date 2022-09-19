@@ -1,5 +1,6 @@
-package com.example.bank.user;
+package com.example.bank.dal.entity;
 
+import com.example.bank.dal.entity.Audit;
 import com.example.bank.dal.entity.CashBox;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "usr")
-public class User{
+public class User extends Audit<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

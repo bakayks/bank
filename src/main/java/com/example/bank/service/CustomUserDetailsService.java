@@ -1,7 +1,7 @@
 package com.example.bank.service;
 
-import com.example.bank.user.User;
-import com.example.bank.user.UserRepository;
+import com.example.bank.dal.entity.User;
+import com.example.bank.dal.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

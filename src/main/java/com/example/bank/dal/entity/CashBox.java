@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Entity
 @Table(name = "cashboxes")
-public class CashBox {
+public class CashBox extends Audit<String>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,12 +20,6 @@ public class CashBox {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "current_balance_USD")
-    private BigDecimal currentBalanceUSD;
-
-    @Column(name = "current_balance_EURO")
-    private BigDecimal currentBalanceEURO;
-
-    @Column(name = "current_balance_SOM")
-    private BigDecimal currentBalanceSOM;
+    @OneToOne
+    private CashBoxBalance cashBoxBalance;
 }
